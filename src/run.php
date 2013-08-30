@@ -22,7 +22,7 @@ if ( $type == 'open' || $type == 'copy' || $type == 'set') {
 		file_put_contents('userconfig.php', $str);
 		echo 'Set Master Board Success!';
 	}
-	
+
 } else if ( $type == 'notice') {
 
 	$w = new Workflows();
@@ -44,7 +44,7 @@ if ( $type == 'open' || $type == 'copy' || $type == 'set') {
 	$w = new Workflows();
 	try {
 		///// board
-		$url = $api.'members/me/boards?key='.$key.'&token='.$token;
+		$url = $api.'members/me/boards?filter=open&key='.$key.'&token='.$token;
 		$data = json_decode( $w->request( $url ));
 
 		foreach( $data as $results ):
@@ -62,7 +62,7 @@ if ( $type == 'open' || $type == 'copy' || $type == 'set') {
 			endif;
 		endforeach;
 
-		file_put_contents( $datadir . '/boardlist.xml', $w->toxml());	
+		file_put_contents( $datadir . '/boardlist.xml', $w->toxml());
 
 		///// cards
 		$w->reset();
@@ -74,10 +74,10 @@ if ( $type == 'open' || $type == 'copy' || $type == 'set') {
 			$w->result( $results->id, $results->url . '__SPLITER__' . $results->id, $results->name, strip_tags($results->desc), 'icon.png' );
 		endforeach;
 
-		file_put_contents( $datadir . '/cardlist.xml', $w->toxml());	
+		file_put_contents( $datadir . '/cardlist.xml', $w->toxml());
 
 		echo 'Pull Success! Data In: ' . $datadir;
-		
+
 	} catch (Exception $e) {
 		echo 'Error!' . $e;
 	}
